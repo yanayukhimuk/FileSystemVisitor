@@ -13,7 +13,7 @@ namespace FileSystemVisitor
 {
     public partial class FileSystemVisitorForm : Form
     {
-        private string filePath = "";
+        private string filePath = "D:";
         private bool isFile = false;
         private string currentlySelectedItem = "";
 
