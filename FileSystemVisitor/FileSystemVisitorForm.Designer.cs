@@ -49,6 +49,7 @@ namespace FileSystemVisitor
             this.backButton.TabIndex = 0;
             this.backButton.Text = "Back";
             this.backButton.UseVisualStyleBackColor = true;
+            this.backButton.Click += new System.EventHandler(this.backButton_Click);
             // 
             // foundFilesListView
             // 
@@ -61,6 +62,7 @@ namespace FileSystemVisitor
             this.foundFilesListView.TabIndex = 1;
             this.foundFilesListView.UseCompatibleStateImageBehavior = false;
             this.foundFilesListView.ItemSelectionChanged += new System.Windows.Forms.ListViewItemSelectionChangedEventHandler(this.foundFilesListView_ItemSelectionChanged);
+            this.foundFilesListView.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.foundFilesListView_MouseDoubleClick);
             // 
             // iconList
             // 
@@ -90,7 +92,7 @@ namespace FileSystemVisitor
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(129, 424);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(18, 17);
+            this.label1.Size = new System.Drawing.Size(15, 16);
             this.label1.TabIndex = 4;
             this.label1.Text = "--";
             // 
@@ -99,7 +101,7 @@ namespace FileSystemVisitor
             this.fileNameLabel.AutoSize = true;
             this.fileNameLabel.Location = new System.Drawing.Point(30, 424);
             this.fileNameLabel.Name = "fileNameLabel";
-            this.fileNameLabel.Size = new System.Drawing.Size(71, 17);
+            this.fileNameLabel.Size = new System.Drawing.Size(69, 16);
             this.fileNameLabel.TabIndex = 5;
             this.fileNameLabel.Text = "File Name";
             this.fileNameLabel.Click += new System.EventHandler(this.label2_Click);
@@ -109,7 +111,7 @@ namespace FileSystemVisitor
             this.fileTypeLabel.AutoSize = true;
             this.fileTypeLabel.Location = new System.Drawing.Point(610, 424);
             this.fileTypeLabel.Name = "fileTypeLabel";
-            this.fileTypeLabel.Size = new System.Drawing.Size(66, 17);
+            this.fileTypeLabel.Size = new System.Drawing.Size(64, 16);
             this.fileTypeLabel.TabIndex = 6;
             this.fileTypeLabel.Text = "File Type";
             // 
@@ -118,7 +120,7 @@ namespace FileSystemVisitor
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(699, 424);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(18, 17);
+            this.label4.Size = new System.Drawing.Size(15, 16);
             this.label4.TabIndex = 7;
             this.label4.Text = "--";
             // 

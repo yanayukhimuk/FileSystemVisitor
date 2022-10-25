@@ -8,6 +8,7 @@ using System.Text;
 using System.IO;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Security.Cryptography.X509Certificates;
 
 namespace FileSystemVisitor
 {
@@ -32,26 +33,50 @@ namespace FileSystemVisitor
         public void loadFilesAndDirectories()
         {
             DirectoryInfo fileList;
+            string tempFilePath = "";
+            FileAttributes fileAttributes;
 
             try
             {
-                fileList = new DirectoryInfo(filePath);
-                FileInfo[] files = fileList.GetFiles();
-                DirectoryInfo[] dirs = fileList.GetDirectories();
-
-                foundFilesListView.Items.Clear();
-
-                for(int i = 0; i < files.Length; i++)
+                if (isFile)
                 {
-                    foundFilesListView.Items.Add(files[i].Name);
+                    tempFilePath = filePath + "/" + currentlySelectedItem;
+                    FileInfo fileInfo = new FileInfo(tempFilePath);
+                    fileNameLabel.Text = fileInfo.Name;
+                    fileTypeLabel.Text = fileInfo.Extension;
+                    fileAttributes = File.GetAttributes(tempFilePath);
+                }
+                else
+                {
+                    fileAttributes = File.GetAttributes(filePath);
                 }
 
-                for(int i = 0; i < dirs.Length; i++)
+                if ((fileAttributes & FileAttributes.Directory) == FileAttributes.Directory)
                 {
-                    foundFilesListView.Items.Add(dirs[i].Name);
+                    fileList = new DirectoryInfo(filePath);
+                    FileInfo[] files = fileList.GetFiles();
+                    DirectoryInfo[] dirs = fileList.GetDirectories();
+                    string fileExtension = "";
+
+                    foundFilesListView.Items.Clear();
+
+                    for (int i = 0; i < files.Length; i++)
+                    {
+                        foundFilesListView.Items.Add(files[i].Name);
+                    }
+
+                    for (int i = 0; i < dirs.Length; i++)
+                    {
+                        foundFilesListView.Items.Add(dirs[i].Name);
+                    }
+                }
+
+                else
+                {
+                    fileNameLabel.Text = this.currentlySelectedItem;
                 }
             }
-            catch(Exception e)
+            catch (Exception e)
             {
 
             }
@@ -59,9 +84,35 @@ namespace FileSystemVisitor
 
         public void loadButtonAction()
         {
+            removeBackSlash();
             filePath = filePathTextBox.Text;
             loadFilesAndDirectories();
             isFile = false;
+        }
+
+        public void removeBackSlash()
+        {
+            string path = filePathTextBox.Text;
+            if (path.LastIndexOf("/") == path.Length - 1)
+            {
+                filePathTextBox.Text = path.Substring(0, path.Length - 1);
+            }
+        }
+
+        public void goBack()
+        {
+            try
+            {
+                string path = filePathTextBox.Text;
+                path = path.Substring(0, path.LastIndexOf("/"));
+                this.isFile = false;
+                filePathTextBox.Text = path;
+                removeBackSlash();
+            }
+            catch (Exception e)
+            {
+
+            }
         }
         private void label2_Click(object sender, EventArgs e)
         {
@@ -87,6 +138,17 @@ namespace FileSystemVisitor
             {
                 isFile = true;
             }
+        }
+
+        private void foundFilesListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            loadButtonAction();
+        }
+
+        private void backButton_Click(object sender, EventArgs e)
+        {
+            goBack();
+            loadButtonAction();
         }
     }
 }
